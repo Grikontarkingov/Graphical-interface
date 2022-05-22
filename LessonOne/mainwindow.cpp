@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete taskOne;
+    delete taskTwo;
+    delete taskThree;
 }
 
 
