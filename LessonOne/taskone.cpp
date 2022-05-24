@@ -61,6 +61,12 @@ void TaskOne::CalculateQuadraticEquation(qint32 a, qint32 b, qint32 c)
 
 void TaskOne::CalculateLinearEquation(qint32 b, qint32 c)
 {
+    if(b == 0)
+    {
+        ui->result_line->setText("No roots");
+        return;
+    }
+
     qint32 number_result = 0;
     QString text_result;
     number_result = -c / b;
