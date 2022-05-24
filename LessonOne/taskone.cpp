@@ -21,7 +21,7 @@ void TaskOne::on_calculate_button_clicked()
     qint32 b = ui->num_b_edit->text().toInt();
     qint32 c = ui->num_c_edit->text().toInt();
 
-    if(a == 0)
+    if(0 == a)
     {
         CalculateLinearEquation(b, c);
     }
@@ -37,11 +37,11 @@ void TaskOne::CalculateQuadraticEquation(qint32 a, qint32 b, qint32 c)
     qint32 number_result = 0;
     QString text_result;
 
-    if(discriminant < 0)
+    if(0 > discriminant)
     {
         ui->result_line->setText("No roots");
     }
-    else if(discriminant == 0)
+    else if(0 == discriminant)
     {
         number_result = -b / (2 * a);
         text_result = "X = " + QString::number(number_result);
@@ -61,7 +61,7 @@ void TaskOne::CalculateQuadraticEquation(qint32 a, qint32 b, qint32 c)
 
 void TaskOne::CalculateLinearEquation(qint32 b, qint32 c)
 {
-    if(b == 0)
+    if(0 == b)
     {
         ui->result_line->setText("No roots");
         return;
