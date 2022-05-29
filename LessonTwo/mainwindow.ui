@@ -6,84 +6,80 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>226</height>
+    <width>168</width>
+    <height>215</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <pointsize>11</pointsize>
-    <bold>true</bold>
-   </font>
-  </property>
   <property name="windowTitle">
-   <string>LessonOne</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="MainTitle">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>40</x>
       <y>30</y>
-      <width>101</width>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>  Select task</string>
+     <string>  SelectTask</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="TaskOne">
+   <widget class="QPushButton" name="taskOneButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>40</x>
       <y>60</y>
-      <width>81</width>
+      <width>91</width>
       <height>24</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>11</pointsize>
-      <bold>false</bold>
      </font>
     </property>
     <property name="text">
      <string>Task One</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="TaskTwo">
+   <widget class="QPushButton" name="taskTwoButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>40</x>
       <y>100</y>
-      <width>81</width>
+      <width>91</width>
       <height>24</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>11</pointsize>
-      <bold>false</bold>
      </font>
     </property>
     <property name="text">
      <string>Task Two</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="TaskThree">
+   <widget class="QPushButton" name="taskThreeButton">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>40</x>
       <y>140</y>
-      <width>81</width>
+      <width>91</width>
       <height>24</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>11</pointsize>
-      <bold>false</bold>
      </font>
     </property>
     <property name="text">
@@ -96,8 +92,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>285</width>
-     <height>25</height>
+     <width>168</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

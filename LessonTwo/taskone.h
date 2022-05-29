@@ -7,6 +7,8 @@ namespace Ui {
 class TaskOne;
 }
 
+class ParseText;
+
 class TaskOne : public QWidget
 {
     Q_OBJECT
@@ -19,16 +21,13 @@ signals:
     void mainWindow();
 
 private slots:
-    void on_calculate_button_clicked();
+    void on_backToMainMenuButton_clicked();
 
-    void on_mainMenuButton_clicked();
+    void on_plainTextWidget_textChanged();
 
 private:
-    void CalculateQuadraticEquation(qint32 a, qint32 b, qint32 c);
-    void CalculateLinearEquation(qint32 b, qint32 c);
-    qint32 CalculateDiscriminant(qint32 a, qint32 b, qint32 c);
-
     Ui::TaskOne *ui;
+    ParseText* parseText;
 };
 
 #endif // TASKONE_H

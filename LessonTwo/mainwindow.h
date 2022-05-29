@@ -20,11 +20,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_TaskOne_clicked();
+    void on_taskOneButton_clicked();
 
-    void on_TaskTwo_clicked();
+    void on_taskTwoButton_clicked();
 
-    void on_TaskThree_clicked();
+    void on_taskThreeButton_clicked();
 
 private:
     Ui::MainWindow *ui;
