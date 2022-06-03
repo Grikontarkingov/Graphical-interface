@@ -20,8 +20,7 @@ private slots:
     void on_openFile_clicked();
 
 private:
-    void ParseWeather(QString& in);
-    void ParseRates(QString& in);
+    void Parse(QString& in, const QString start, const QString end);
 
     Ui::MainWindow *ui;
 };

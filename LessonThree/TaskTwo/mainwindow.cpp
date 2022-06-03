@@ -31,29 +31,18 @@ void MainWindow::on_openFile_clicked()
             QTextCodec* codec = QTextCodec::codecForName("Windows-1251");
             QString html(codec->fromUnicode(stream.readAll()).data());
 
-            ParseWeather(html);
-            ParseRates(html);
+            Parse(html, "<div class=\"weather", "<div class=\"rates");
+            Parse(html, "<div class=\"rates", "<a class=\"horoscope");
 
             file.close();
         }
     }
 }
 
-void MainWindow::ParseWeather(QString& in)
+void MainWindow::Parse(QString& in, const QString start, const QString end)
 {
-    int startIndex = in.indexOf("<div class=\"weather");
-    int endIndex = in.indexOf("<div class=\"rates");
-
-    QString result;
-
-    result.insert(0, &in.data()[startIndex], endIndex - startIndex);
-    ui->htmlText->appendHtml(result);
-}
-
-void MainWindow::ParseRates(QString& in)
-{
-    int startIndex = in.indexOf("<div class=\"rates");
-    int endIndex = in.indexOf("<a class=\"horoscope");
+    int startIndex = in.indexOf(start);
+    int endIndex = in.indexOf(end);
 
     QString result;
 
