@@ -6,38 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>168</width>
-    <height>215</height>
+    <width>434</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QTextEdit" name="textEditor">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>81</width>
-      <height>16</height>
+      <x>10</x>
+      <y>10</y>
+      <width>411</width>
+      <height>411</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>  SelectTask</string>
-    </property>
    </widget>
-   <widget class="QPushButton" name="taskOneButton">
+   <widget class="QPushButton" name="openFile">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>60</y>
-      <width>91</width>
+      <x>20</x>
+      <y>430</y>
+      <width>131</width>
       <height>24</height>
      </rect>
     </property>
@@ -47,15 +39,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Task One</string>
+     <string>Open</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="taskTwoButton">
+   <widget class="QPushButton" name="saveFile">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>100</y>
-      <width>91</width>
+      <x>170</x>
+      <y>430</y>
+      <width>131</width>
       <height>24</height>
      </rect>
     </property>
@@ -65,15 +57,15 @@
      </font>
     </property>
     <property name="text">
-     <string>Task Two</string>
+     <string>Save</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="taskThreeButton">
+   <widget class="QPushButton" name="helpButton">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>140</y>
-      <width>91</width>
+      <x>319</x>
+      <y>430</y>
+      <width>101</width>
       <height>24</height>
      </rect>
     </property>
@@ -83,7 +75,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Task Three</string>
+     <string>Help</string>
     </property>
    </widget>
   </widget>
@@ -92,7 +84,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>168</width>
+     <width>434</width>
      <height>21</height>
     </rect>
    </property>

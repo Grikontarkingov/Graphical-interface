@@ -7,9 +7,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class TaskOne;
-class TaskTwo;
-class TaskThree;
+class HelpWindow;
 
 class MainWindow : public QMainWindow
 {
@@ -20,16 +18,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_taskOneButton_clicked();
+    void on_openFile_clicked();
 
-    void on_taskTwoButton_clicked();
+    void on_saveFile_clicked();
 
-    void on_taskThreeButton_clicked();
+    void on_helpButton_clicked();
+
+    void deleteHelpWindow();
 
 private:
+    void OpenFileTxt();
+    void SaveTextFile();
+
     Ui::MainWindow *ui;
-    TaskOne* taskOne;
-    TaskTwo* taskTwo;
-    TaskThree* taskThree;
+    HelpWindow* helpWindow;
+
+    QString filename;
 };
 #endif // MAINWINDOW_H
