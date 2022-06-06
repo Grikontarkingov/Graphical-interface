@@ -2,6 +2,7 @@
 #define HELPWINDOW_H
 
 #include <QWidget>
+#include <QTextEdit>
 #include <QCloseEvent>
 
 namespace Ui {
@@ -20,12 +21,14 @@ signals:
     void helpClose();
 
 protected:
-    virtual void closeEvent(QCloseEvent* event) override;
+    virtual void closeEvent(QCloseEvent* event);
 
 private:
     void OpenFileTxt();
 
     Ui::HelpWindow *ui;
+
+    QTextEdit* textEdit;
 };
 
 #endif // HELPWINDOW_H

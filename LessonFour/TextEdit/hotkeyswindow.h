@@ -1,0 +1,51 @@
+#ifndef HOTKEYSWINDOW_H
+#define HOTKEYSWINDOW_H
+
+#include <QWidget>
+#include <QStandardItemModel>
+#include <QTableView>
+#include <QPushButton>
+
+namespace Ui {
+class HotkeysWindow;
+}
+
+class HotkeysWindow : public QWidget
+{
+    Q_OBJECT
+
+public:
+    HotkeysWindow(QWidget *parent = nullptr);
+
+    HotkeysWindow(QString openFile = "",
+                  QString saveFile = "",
+                  QString newFile = "",
+                  QString quitApp = "");
+    ~HotkeysWindow();
+signals:
+    void hotkeysWindowClose();
+    void hotkeysSave(QList<QStandardItem* > hotkeys);
+
+protected:
+    void closeEvent(QCloseEvent* event);
+
+private slots:
+    void on_save_clicked();
+
+private:
+    void createTable();
+    void createSaveButton();
+
+    Ui::HotkeysWindow *ui;
+    QStandardItemModel* model;
+    QTableView* hotkeys;
+
+    QPushButton* save;
+
+    QString hotkeyOpen;
+    QString hotkeySave;
+    QString hotkeyNew;
+    QString hotkeyQuit;
+};
+
+#endif // HOTKEYSWINDOW_H
