@@ -3,10 +3,18 @@
 
 #include <QTextStream>
 
-HelpWindow::HelpWindow(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::HelpWindow)
+HelpWindow::HelpWindow(QTranslator& translator,
+                       QString& language) :
+    QWidget(nullptr),
+    ui(new Ui::HelpWindow),
+    translate(translator),
+    lang(language)
 {
+    if(translator.load(":/TextEdit_" + lang))
+    {
+        qApp->installTranslator(&translator);
+    }
+
     ui->setupUi(this);
     this->setWindowTitle(tr("About"));
     this->setGeometry(QRect(0, 0, 300, 400));

@@ -13,14 +13,13 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("Text Editor"));
     this->setGeometry(QRect(0, 0, 500, 600));
 
-    fileMenu = new QMenu(tr("File"));
+    fileMenu = new QMenu;
     ui->menubar->addMenu(fileMenu);
-    settings = new QMenu(tr("Settings"));
+    settings = new QMenu;
     ui->menubar->addMenu(settings);
-    help = new QMenu(tr("Help"));
+    help = new QMenu;
     ui->menubar->addMenu(help);
 
     hotkeysWindow = nullptr;
@@ -30,42 +29,34 @@ MainWindow::MainWindow(QWidget *parent)
     textEdit->setGeometry(QRect(10, 30, 480, 560));
 
     newFile = new QAction;
-    newFile->setText(tr("New"));
     fileMenu->addAction(newFile);
     connect(newFile, &QAction::triggered, this, &MainWindow::on_newFile_clicked);
 
     open = new QAction;
-    open->setText(tr("Open"));
     fileMenu->addAction(open);
     connect(open, &QAction::triggered, this, &MainWindow::on_open_clicked);
 
     openReadOnly = new QAction;
-    openReadOnly->setText(tr("Open read-only"));
     fileMenu->addAction(openReadOnly);
     connect(openReadOnly, &QAction::triggered, this, &MainWindow::on_openReadOnly_clicked);
 
     save = new QAction;
-    save->setText(tr("Save"));
     fileMenu->addAction(save);
     connect(save, &QAction::triggered, this, &MainWindow::on_save_clicked);
 
     changeLangToRu = new QAction;
-    changeLangToRu->setText(tr("Change language to Ru"));
     fileMenu->addAction(changeLangToRu);
     connect(changeLangToRu, &QAction::triggered, this, &MainWindow::on_changeLangToRu_clicked);
 
     changeLangToEn = new QAction;
-    changeLangToEn->setText(tr("Change language to En"));
     fileMenu->addAction(changeLangToEn);
     connect(changeLangToEn, &QAction::triggered, this, &MainWindow::on_changeLangToEn_clicked);
 
     hotkeys = new QAction;
-    hotkeys->setText(tr("Change hotkeys"));
     settings->addAction(hotkeys);
     connect(hotkeys, &QAction::triggered, this, &MainWindow::on_changeHotkeys_clicked);
 
     about = new QAction;
-    about->setText(tr("About"));
     help->addAction(about);
     connect(about, &QAction::triggered, this, &MainWindow::on_help_clicked);
 
@@ -84,6 +75,9 @@ MainWindow::MainWindow(QWidget *parent)
     keyQuit = new QShortcut(this);
     keyQuit->setKey(Qt::CTRL + Qt::Key_Q);
     connect(keyQuit, &QShortcut::activated, this, &MainWindow::quitApp);
+
+    lang = "en";
+    setLanguage(lang);
 }
 
 MainWindow::~MainWindow()
@@ -147,20 +141,22 @@ void MainWindow::on_save_clicked()
 
 void MainWindow::on_changeLangToRu_clicked()
 {
-    translator.load(":/TextEdit_ru.qm");
-    qApp->installTranslator(&translator);
+    lang.clear();
+    lang = "ru";
+    setLanguage(lang);
 }
 
 
 void MainWindow::on_changeLangToEn_clicked()
 {
-    translator.load(":/TextEdit_en.qm");
-    qApp->installTranslator(&translator);
+    lang.clear();
+    lang = "en";
+    setLanguage(lang);
 }
 
 void MainWindow::on_help_clicked()
 {
-    helpWindow = new HelpWindow;
+    helpWindow = new HelpWindow(translator, lang);
     connect(helpWindow, &HelpWindow::helpClose, this, &MainWindow::deleteHelpWindow);
     helpWindow->show();
 }
@@ -211,7 +207,9 @@ void MainWindow::quitApp()
 
 void MainWindow::on_changeHotkeys_clicked()
 {
-    hotkeysWindow = new HotkeysWindow(keyOpen->key().toString(),
+    hotkeysWindow = new HotkeysWindow(translator,
+                                      lang,
+                                      keyOpen->key().toString(),
                                       keySave->key().toString(),
                                       keyNew->key().toString(),
                                       keyQuit->key().toString());
@@ -244,4 +242,25 @@ void MainWindow::changeHotkeys(QList<QStandardItem* > hotkeys)
     {
         keyQuit->setKey(hotkeys[3]->text());
     }
+}
+
+void MainWindow::setLanguage(const QString lang)
+{
+    if(translator.load(":/TextEdit_" + lang))
+    {
+        qApp->installTranslator(&translator);
+    }
+
+    this->setWindowTitle(tr("Text Editor"));
+    fileMenu->setTitle(tr("File"));
+    settings->setTitle(tr("Settings"));
+    help->setTitle(tr("Help"));
+    newFile->setText(tr("New"));
+    open->setText(tr("Open"));
+    openReadOnly->setText(tr("Open read-only"));
+    save->setText(tr("Save"));
+    changeLangToRu->setText(tr("Change language to Ru"));
+    changeLangToEn->setText(tr("Change language to En"));
+    hotkeys->setText(tr("Change hotkeys"));
+    about->setText(tr("About"));
 }

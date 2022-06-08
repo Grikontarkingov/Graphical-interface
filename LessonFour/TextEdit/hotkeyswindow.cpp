@@ -4,20 +4,17 @@
 #include <QCloseEvent>
 #include <QVBoxLayout>
 
-HotkeysWindow::HotkeysWindow(QWidget *parent)
-    :
-      QWidget(parent),
-      ui(new Ui::HotkeysWindow)
-{
-    ui->setupUi(this);
-}
-HotkeysWindow::HotkeysWindow(QString openFile,
+HotkeysWindow::HotkeysWindow(QTranslator& translator,
+                             QString& language,
+                             QString openFile,
                              QString saveFile,
                              QString newFile,
                              QString quitApp)
     :
       QWidget(nullptr),
       ui(new Ui::HotkeysWindow),
+      translate(translator),
+      lang(language),
       hotkeyOpen(openFile),
       hotkeySave(saveFile),
       hotkeyNew(newFile),

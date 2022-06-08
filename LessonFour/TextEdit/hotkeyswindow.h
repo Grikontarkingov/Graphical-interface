@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QPushButton>
+#include <QTranslator>
 
 namespace Ui {
 class HotkeysWindow;
@@ -15,9 +16,9 @@ class HotkeysWindow : public QWidget
     Q_OBJECT
 
 public:
-    HotkeysWindow(QWidget *parent = nullptr);
-
-    HotkeysWindow(QString openFile = "",
+    HotkeysWindow(QTranslator& translator,
+                  QString& language,
+                  QString openFile = "",
                   QString saveFile = "",
                   QString newFile = "",
                   QString quitApp = "");
@@ -41,6 +42,9 @@ private:
     QTableView* hotkeys;
 
     QPushButton* save;
+
+    QTranslator& translate;
+    QString& lang;
 
     QString hotkeyOpen;
     QString hotkeySave;

@@ -43,6 +43,7 @@ private slots:
 private:
     void OpenFileTxt();
     void SaveTextFile();
+    void setLanguage(const QString lang);
 
     Ui::MainWindow *ui;
     HotkeysWindow* hotkeysWindow;
@@ -66,6 +67,7 @@ private:
     QAction* about;
 
     QString filename;
+    QString lang;
 
     QShortcut* keyOpen;
     QShortcut* keySave;

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QCloseEvent>
+#include <QTranslator>
 
 namespace Ui {
 class HelpWindow;
@@ -14,7 +15,8 @@ class HelpWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit HelpWindow(QWidget *parent = nullptr);
+    HelpWindow(QTranslator& translator,
+               QString& language);
     ~HelpWindow();
 
 signals:
@@ -29,6 +31,8 @@ private:
     Ui::HelpWindow *ui;
 
     QTextEdit* textEdit;
+    QTranslator& translate;
+    QString& lang;
 };
 
 #endif // HELPWINDOW_H
