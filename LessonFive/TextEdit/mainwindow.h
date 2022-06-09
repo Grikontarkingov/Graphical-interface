@@ -35,6 +35,10 @@ private slots:
     void deleteChangeHotkeysWindow();
     void changeHotkeys(QList<QStandardItem* > hotkeys);
 
+    void on_classicTheme_clicked();
+    void on_darkTheme_clicked();
+    void on_colorfulTheme_clicked();
+
     void on_help_clicked();
     void deleteHelpWindow();
 
@@ -62,6 +66,11 @@ private:
 
     QMenu* settings;
     QAction* hotkeys;
+    QMenu* theme;
+    QAction* classicTheme;
+    QAction* darkTheme;
+    QAction* colorfulTheme;
+
 
     QMenu* help;
     QAction* about;
