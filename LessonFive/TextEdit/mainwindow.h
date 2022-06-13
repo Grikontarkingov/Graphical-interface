@@ -48,6 +48,7 @@ private:
     void OpenFileTxt();
     void SaveTextFile();
     void setLanguage(const QString lang);
+    void setStyleApp(const QString style);
 
     Ui::MainWindow *ui;
     HotkeysWindow* hotkeysWindow;

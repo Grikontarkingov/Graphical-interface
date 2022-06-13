@@ -265,76 +265,17 @@ void MainWindow::changeHotkeys(QList<QStandardItem* > hotkeys)
 
 void MainWindow::on_classicTheme_clicked()
 {
-    this->setStyleSheet("QMainWindow{background-color:rgb(230,230,230)}"
-                        "QMenuBar{background-color:rgb(230,230,230)}"
-                        "QMenuBar::item::selected{background-color:rgb(51,173,255)}"
-                        "QMenuBar::item::selected{color:rgb(0,0,0)}"
-                        "QTextEdit{background-color:rgb(255,255,255)}");
-    fileMenu->setStyleSheet("QMenu{background-color:rgb(230,230,230)}"
-                            "QMenu::item::selected{background-color:rgb(51,173,255)}"
-                            "QMenu::item::selected{color:rgb(0,0,0)}");
-    settings->setStyleSheet("QMenu{background-color:rgb(230,230,230)}"
-                            "QMenu::item::selected{background-color:rgb(51,173,255)}"
-                            "QMenu::item::selected{color:rgb(0,0,0)}");
-    help->setStyleSheet("QMenu{background-color:rgb(230,230,230)}"
-                        "QMenu::item::selected{background-color:rgb(51,173,255)}"
-                        "QMenu::item::selected{color:rgb(0,0,0)}");
-    theme->setStyleSheet("QMenu{background-color:rgb(230,230,230)}"
-                         "QMenu::item::selected{background-color:rgb(51,173,255)}"
-                         "QMenu::item::selected{color:rgb(0,0,0)}");
+    setStyleApp(":/ClassicTheme.qss");
 }
 
 void MainWindow::on_darkTheme_clicked()
 {
-    this->setStyleSheet("QMainWindow{background-color:rgb(19, 38, 58)}"
-                        "QMenuBar{background-color:rgb(19, 38, 58)}"
-                        "QMenuBar::item{color:rgb(242, 242, 242)}"
-                        "QMenuBar::item::selected{background-color:rgb(40, 164, 164)}"
-                        "QMenuBar::item::selected{color:rgb(242, 242, 242)}"
-                        "QTextEdit{background-color:rgb(15, 30, 62)}");
-    fileMenu->setStyleSheet("QMenu{background-color:rgb(19, 38, 58)}"
-                            "QMenu::item{color:rgb(242, 242, 242)}"
-                            "QMenu::item::selected{background-color:rgb(40, 164, 164)}"
-                            "QMenu::item::selected{color:rgb(242, 242, 242)}");
-    settings->setStyleSheet("QMenu{background-color:rgb(19, 38, 58)}"
-                            "QMenu::item{color:rgb(242, 242, 242)}"
-                            "QMenu::item::selected{background-color:rgb(40, 164, 164)}"
-                            "QMenu::item::selected{color:rgb(242, 242, 242)}");
-    help->setStyleSheet("QMenu{background-color:rgb(19, 38, 58)}"
-                        "QMenu::item{color:rgb(242, 242, 242)}"
-                        "QMenu::item::selected{background-color:rgb(40, 164, 164)}"
-                        "QMenu::item::selected{color:rgb(242, 242, 242)}");
-    theme->setStyleSheet("QMenu{background-color:rgb(19, 38, 58)}"
-                         "QMenu::item{color:rgb(242, 242, 242)}"
-                         "QMenu::item::selected{background-color:rgb(40, 164, 164)}"
-                         "QMenu::item::selected{color:rgb(242, 242, 242)}");
-    textEdit->setStyleSheet("QTextEdit{color:rgb(255, 255, 179)}");
+    setStyleApp(":/DarkTheme.qss");
 }
 
 void MainWindow::on_colorfulTheme_clicked()
 {
-    this->setStyleSheet("QMainWindow{background-color:rgb(128, 255, 229)}"
-                        "QMenuBar{background-color:rgb(128, 255, 229)}"
-                        "QMenuBar::item{color:rgb(179, 134, 0)}"
-                        "QMenuBar::item::selected{background-color:rgb(255, 153, 255)}"
-                        "QMenuBar::item::selected{color:rgb(179, 134, 0)}"
-                        "QTextEdit{background-color:rgb(128, 128, 255)}");
-    fileMenu->setStyleSheet("QMenu{background-color:rgb(128, 255, 229)}"
-                            "QMenu::item{color:rgb(179, 134, 0)}"
-                            "QMenu::item::selected{background-color:rgb(255, 153, 255)}"
-                            "QMenu::item::selected{color:rgb(179, 134, 0)}");
-    settings->setStyleSheet("QMenu{background-color:rgb(128, 255, 229)}"
-                            "QMenu::item{color:rgb(179, 134, 0)}"
-                            "QMenu::item::selected{background-color:rgb(255, 153, 255)}"
-                            "QMenu::item::selected{color:rgb(179, 134, 0)}");
-    help->setStyleSheet("QMenu{background-color:rgb(128, 255, 229)}"
-                        "QMenu::item{color:rgb(179, 134, 0)}"
-                        "QMenu::item::selected{background-color:rgb(255, 153, 255)}"
-                        "QMenu::item::selected{color:rgb(179, 134, 0)}");
-    theme->setStyleSheet("QMenu{background-color:rgb(128, 255, 229)}"
-                         "QMenu::item{color:rgb(179, 134, 0)}"
-                         "QMenu::item::selected{background-color:rgb(255, 153, 255)}"
-                         "QMenu::item::selected{color:rgb(179, 134, 0)}");
+    setStyleApp(":/ColorfulTheme.qss");
 }
 
 void MainWindow::setLanguage(const QString lang)
@@ -360,4 +301,15 @@ void MainWindow::setLanguage(const QString lang)
     darkTheme->setText(tr("Dark Theme"));
     colorfulTheme->setText(tr("Colorful theme"));
     about->setText(tr("About"));
+}
+
+
+void MainWindow::setStyleApp(const QString style)
+{
+    QFile qss(style);
+    if(qss.open(QFile::ReadOnly | QFile::ExistingOnly))
+    {
+        qApp->setStyleSheet(qss.readAll());
+        qss.close();
+    }
 }
