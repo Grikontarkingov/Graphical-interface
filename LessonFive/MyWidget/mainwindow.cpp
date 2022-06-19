@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent),
-      fileViewer(new FileViewer)
+    : QMainWindow(parent)
 {
+    mQW = new MyQtWidget(this);
 }
 
 MainWindow::~MainWindow()
 {
-    if(fileViewer) delete fileViewer;
+    if(mQW) delete mQW;
 }
 

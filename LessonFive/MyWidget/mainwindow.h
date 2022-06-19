@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "fileviewer.h"
+#include "myqtwidget.h"
 
 #include <QMainWindow>
 
@@ -14,6 +14,6 @@ public:
     ~MainWindow();
 
 private:
-    FileViewer* fileViewer;
+    MyQtWidget* mQW;
 };
 #endif // MAINWINDOW_H
