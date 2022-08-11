@@ -60,7 +60,6 @@ private:
     QTranslator translator;
 
     QMdiArea* textsEditors;
-    ContextMenu* contextMenu;
 
     QMenu* fileMenu;
     QAction* newFile;
@@ -92,5 +91,7 @@ private:
     QShortcut* keySave;
     QShortcut* keyNew;
     QShortcut* keyQuit;
+    QShortcut* keySendToPrint;
+    QShortcut* keyNewTab;
 };
 #endif // MAINWINDOW_H

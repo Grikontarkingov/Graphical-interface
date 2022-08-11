@@ -21,7 +21,9 @@ public:
                   QString openFile = "",
                   QString saveFile = "",
                   QString newFile = "",
-                  QString quitApp = "");
+                  QString quitApp = "",
+                  QString hotkeySendToPrint = "",
+                  QString hotkeyNewTab = "");
     ~HotkeysWindow();
 signals:
     void hotkeysWindowClose();
@@ -49,6 +51,8 @@ private:
     QString hotkeyOpen;
     QString hotkeySave;
     QString hotkeyNew;
+    QString hotkeySendToPrint;
+    QString hotkeyNewTab;
     QString hotkeyQuit;
 };
 

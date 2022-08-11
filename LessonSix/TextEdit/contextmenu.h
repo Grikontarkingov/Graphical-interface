@@ -18,6 +18,10 @@ public:
     ContextMenu(QWidget* parent = nullptr);
     void print(QPrinter* printer);
 
+    void setTextCopyButton(QString text);
+    void setTextPasteButton(QString text);
+    void setTextSendToPrintButton(QString text);
+
 protected:
     void contextMenuEvent(QContextMenuEvent* event) override;
 
@@ -28,6 +32,10 @@ public slots:
 
 private:
     QMenu* menu;
+
+    QAction* copyAction;
+    QAction* pasteAction;
+    QAction* sendToPrintAction;
 };
 
 #endif // CONTEXTMENU_H

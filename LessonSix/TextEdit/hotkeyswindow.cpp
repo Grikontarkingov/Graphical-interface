@@ -9,7 +9,9 @@ HotkeysWindow::HotkeysWindow(QTranslator& translator,
                              QString openFile,
                              QString saveFile,
                              QString newFile,
-                             QString quitApp)
+                             QString quitApp,
+                             QString hotkeySendToPrint,
+                             QString hotkeyNewTab)
     :
       QWidget(nullptr),
       ui(new Ui::HotkeysWindow),
@@ -18,11 +20,13 @@ HotkeysWindow::HotkeysWindow(QTranslator& translator,
       hotkeyOpen(openFile),
       hotkeySave(saveFile),
       hotkeyNew(newFile),
-      hotkeyQuit(quitApp)
+      hotkeyQuit(quitApp),
+      hotkeySendToPrint(hotkeySendToPrint),
+      hotkeyNewTab(hotkeyNewTab)
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("Hotkeys"));
-    this->setGeometry(0, 0, 339, 200);
+    this->setGeometry(0, 0, 339, 400);
 
    createTable();
    createSaveButton();
@@ -83,6 +87,22 @@ void HotkeysWindow::createTable()
 
     row.append(new QStandardItem(tr("Quit")));
     row.append(new QStandardItem(hotkeyQuit));
+    row.append(new QStandardItem(""));
+    row.at(0)->setEditable(false);
+    row.at(1)->setEditable(false);
+    model->appendRow(row);
+    row.clear();
+
+    row.append(new QStandardItem(tr("SendToPrint")));
+    row.append(new QStandardItem(hotkeySendToPrint));
+    row.append(new QStandardItem(""));
+    row.at(0)->setEditable(false);
+    row.at(1)->setEditable(false);
+    model->appendRow(row);
+    row.clear();
+
+    row.append(new QStandardItem(tr("New Tab")));
+    row.append(new QStandardItem(hotkeyNewTab));
     row.append(new QStandardItem(""));
     row.at(0)->setEditable(false);
     row.at(1)->setEditable(false);

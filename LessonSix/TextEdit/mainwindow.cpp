@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     QGridLayout* layout = new QGridLayout(this);
     centralWidget->setLayout(layout);
     layout->addWidget(textsEditors, 0, 0, 1, 1);
-    textsEditors->addSubWindow(contextMenu);
+    textsEditors->addSubWindow(new ContextMenu(this));
     textsEditors->setGeometry(QRect(10, 30, 480, 560));
 
 
@@ -132,6 +132,15 @@ MainWindow::MainWindow(QWidget *parent)
     keyQuit->setKey(Qt::CTRL + Qt::Key_Q);
     connect(keyQuit, &QShortcut::activated, this, &MainWindow::quitApp);
 
+
+    keySendToPrint = new QShortcut(this);
+    keySendToPrint->setKey(Qt::CTRL + Qt::Key_P);
+    connect(keySendToPrint, &QShortcut::activated, this, &MainWindow::on_sendToPrint_clicked);
+
+    keyNewTab = new QShortcut(this);
+    keyNewTab->setKey(Qt::CTRL + Qt::Key_T);
+    connect(keyNewTab, &QShortcut::activated, this, &MainWindow::on_newTab_clicked);
+
     lang = "en";
     setLanguage(lang);
     on_classicTheme_clicked();
@@ -139,7 +148,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    if(contextMenu) delete contextMenu;
     if(fileMenu) delete fileMenu;
     if(settings) delete settings;
     if(help) delete help;
@@ -162,10 +170,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_newFile_clicked()
 {
-    this->contextMenu->clear();
+    ((ContextMenu*)textsEditors->activeSubWindow()->widget())->clear();
 }
 
 void MainWindow::on_open_clicked()
@@ -174,7 +181,7 @@ void MainWindow::on_open_clicked()
 
     if(filename.length() > 0)
     {
-        contextMenu->setReadOnly(false);
+        ((ContextMenu*)textsEditors->activeSubWindow()->widget())->setReadOnly(false);
         OpenFileTxt();
     }
 }
@@ -185,7 +192,7 @@ void MainWindow::on_openReadOnly_clicked()
 
     if(filename.length() > 0)
     {
-        contextMenu->setReadOnly(true);
+        ((ContextMenu*)textsEditors->activeSubWindow()->widget())->setReadOnly(true);
         OpenFileTxt();
     }
 }
@@ -233,7 +240,7 @@ void MainWindow::on_sendToPrint_clicked()
         return;
     }
 
-    contextMenu->print(&printer);
+    ((ContextMenu*)textsEditors->activeSubWindow()->widget())->print(&printer);
 }
 
 void MainWindow::on_exitApp_clicked()
@@ -279,7 +286,7 @@ void MainWindow::OpenFileTxt()
         if(file.open(QIODevice::ReadOnly | QIODevice::ExistingOnly))
         {
             QTextStream stream(&file);
-            contextMenu->setPlainText(stream.readAll());
+            ((ContextMenu*)textsEditors->activeSubWindow()->widget())->setPlainText(stream.readAll());
             file.close();
         }
     }
@@ -294,7 +301,7 @@ void MainWindow::SaveTextFile()
         if(file.open(QFile::WriteOnly))
         {
             QTextStream stream(&file);
-            stream << contextMenu->toPlainText();
+            stream << ((ContextMenu*)textsEditors->activeSubWindow()->widget())->toPlainText();
             file.close();
         }
     }
@@ -314,7 +321,9 @@ void MainWindow::on_changeHotkeys_clicked()
                                       keyOpen->key().toString(),
                                       keySave->key().toString(),
                                       keyNew->key().toString(),
-                                      keyQuit->key().toString());
+                                      keyQuit->key().toString(),
+                                      keySendToPrint->key().toString(),
+                                      keyNewTab->key().toString());
     connect(hotkeysWindow, &HotkeysWindow::hotkeysWindowClose, this, &MainWindow::deleteChangeHotkeysWindow);
     connect(hotkeysWindow, &HotkeysWindow::hotkeysSave, this, &MainWindow::changeHotkeys);
     hotkeysWindow->show();
@@ -343,6 +352,14 @@ void MainWindow::changeHotkeys(QList<QStandardItem* > hotkeys)
     if(!(hotkeys[3]->text().isEmpty()))
     {
         keyQuit->setKey(hotkeys[3]->text());
+    }
+    if(!(hotkeys[4]->text().isEmpty()))
+    {
+        keyQuit->setKey(hotkeys[4]->text());
+    }
+    if(!(hotkeys[5]->text().isEmpty()))
+    {
+        keyQuit->setKey(hotkeys[5]->text());
     }
 }
 
@@ -388,6 +405,16 @@ void MainWindow::setLanguage(const QString lang)
     darkTheme->setText(tr("Dark Theme"));
     colorfulTheme->setText(tr("Colorful theme"));
     about->setText(tr("About"));
+
+    QList<QMdiSubWindow* > subWindowList = textsEditors->subWindowList();
+    for(int i = 0; i < subWindowList.length(); ++i)
+    {
+        QWidget* widget = subWindowList.at(i)->widget();
+        ContextMenu* temp = (ContextMenu*) widget;
+        temp->setTextCopyButton(tr("Copy"));
+        temp->setTextPasteButton(tr("Paste"));
+        temp->setTextSendToPrintButton(tr("SendToPrint"));
+    }
 }
 
 

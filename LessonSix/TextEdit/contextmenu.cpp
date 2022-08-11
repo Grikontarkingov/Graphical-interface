@@ -12,13 +12,17 @@ ContextMenu::ContextMenu(QWidget* parent)
     : QTextEdit(parent)
 {
     menu = new QMenu(this);
-    QAction* copyAction = menu->addAction(tr("Copy"));
-    QAction* pasteAction = menu->addAction(tr("Paste"));
-    QAction* sendTorint = menu->addAction(tr("Send to print"));
+    copyAction = new QAction;
+    pasteAction = new QAction;
+    sendToPrintAction = new QAction;
+
+    menu->addAction(copyAction);
+    menu->addAction(pasteAction);
+    menu->addAction(sendToPrintAction);
 
     connect(copyAction, &QAction::triggered, this, &ContextMenu::on_copyText_clicked);
     connect(pasteAction, &QAction::triggered, this, &ContextMenu::on_pasteText_clicked);
-    connect(sendTorint, &QAction::triggered, this, &ContextMenu::on_sendToPrint_clicked);
+    connect(sendToPrintAction, &QAction::triggered, this, &ContextMenu::on_sendToPrint_clicked);
 }
 
 void ContextMenu::contextMenuEvent(QContextMenuEvent* event)
@@ -51,6 +55,21 @@ void ContextMenu::on_sendToPrint_clicked()
     }
 
     this->print(&printer);
+}
+
+void ContextMenu::setTextCopyButton(QString text)
+{
+    copyAction->setText(text.toStdString().c_str());
+}
+
+void ContextMenu::setTextPasteButton(QString text)
+{
+    pasteAction->setText(text.toStdString().c_str());
+}
+
+void ContextMenu::setTextSendToPrintButton(QString text)
+{
+    sendToPrintAction->setText(text.toStdString().c_str());
 }
 
 
