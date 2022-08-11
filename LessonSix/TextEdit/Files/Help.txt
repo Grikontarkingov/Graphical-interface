@@ -1,0 +1,7 @@
+This is "Help" ... and bla bla bla...
+
+Default hotkeys:
+"Ctrl + n" - This is command to create new file.
+"Ctrl + o" - This is command to open file.
+"Ctrl + s" - This is command to save file.
+"Ctrl + q" - This is command to close app.
