@@ -2,9 +2,9 @@
 
 #include <QRandomGenerator>
 #include <QPainter>
-#include <QGraphicsSceneMouseEvent>
+#include <QMouseEvent>
 
-Rects::Rects(QObject *parent) : QObject(parent), QGraphicsItem()
+Rects::Rects(QObject *parent) : QObject(parent)
 {
     x = 0;
     y = 0;
@@ -15,7 +15,7 @@ Rects::Rects(QObject *parent) : QObject(parent), QGraphicsItem()
 }
 
 
-void Rects::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Rects::paint(QPainter *painter)
 {
     painter->setBrush(brush);
     painter->drawRect(x - 2, y - 4, 80, 60);
@@ -33,7 +33,7 @@ void Rects::setXY(int xn, int xy)
     this->y = xy;
 }
 
-void Rects::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void Rects::mousePressEvent(QMouseEvent* event)
 {
     if(event->button() & Qt::RightButton)
     {
