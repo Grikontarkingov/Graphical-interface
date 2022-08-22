@@ -1,6 +1,10 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include "rects.h"
+#include "ellipse.h"
+#include "stars.h"
+
 #include <QWidget>
 #include <QMouseEvent>
 
@@ -20,6 +24,9 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event);
     void paintEvent(QPaintEvent *event);
 
+private slots:
+    void deleteRects(Rects* rect);
+
 private:
     void drawRect();
     void drawElipse();
@@ -27,9 +34,9 @@ private:
 
     void nextCount();
 
-    QVector<QRect> rects;
-    QVector<QRectF> ellipses;
-    QVector<QPointF* > stars;
+    QVector<Rects* > rects;
+    QVector<Ellipse* > ellipses;
+    QVector<Stars* > stars;
 
     int counter;
     int x, y;

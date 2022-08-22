@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QApplication>
 #include <QRandomGenerator>
+#include <QStyleOptionGraphicsItem>
 
 Widget::Widget(QWidget *parent)
 : QWidget(parent)
@@ -31,9 +32,7 @@ void Widget::mouseReleaseEvent(QMouseEvent* event)
 void Widget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-
-    QBrush brush;
-    brush.setStyle(Qt::BrushStyle::SolidPattern);
+    QStyleOptionGraphicsItem bla;
 
     switch (counter) {
     case 1:
@@ -52,32 +51,27 @@ void Widget::paintEvent(QPaintEvent *event)
         break;
     }
 
-    if(!rects.empty())
+    if(!rects.isEmpty())
     {
-        brush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
-        painter.setBrush(brush);
-        painter.drawRects(rects);
-    }
-
-    if(!ellipses.empty())
-    {
-        brush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
-        painter.setBrush(brush);
-
-        for(auto ell : ellipses)
+        for(auto rect : rects)
         {
-            painter.drawEllipse(ell);
+            rect->paint(&painter);
         }
     }
 
-    if(!stars.empty())
+    if(!ellipses.isEmpty())
     {
-        brush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
-        painter.setBrush(brush);
+        for(auto ellipse : ellipses)
+        {
+            ellipse->paint(&painter, &bla, this);
+        }
+    }
 
+    if(!stars.isEmpty())
+    {
         for(auto star : stars)
         {
-            painter.drawPolygon(star, 10);
+            star->paint(&painter, &bla, this);
         }
     }
 
@@ -89,32 +83,25 @@ void Widget::paintEvent(QPaintEvent *event)
 
 void Widget::drawRect()
 {
-    QRect rect(x - 2, y - 4, 80, 60);
+    Rects* rect = new Rects(this);
+    rect->setXY(x, y);
+    connect(rect, &Rects::deleteThis, this, &Widget::deleteRects);
 
     rects.push_back(rect);
 }
 
 void Widget::drawElipse()
 {
-    QRectF elipse(x - 2, y - 4, 80, 60);
+    Ellipse* ellipse = new Ellipse;
+    ellipse->setXY(x, y);
 
-    ellipses.push_back(elipse);
+    ellipses.push_back(ellipse);
 }
 
 void Widget::drawStar()
 {
-    QPointF* star = new QPointF[10];
-
-    star[0] = QPointF(x, y - 45);
-    star[1] = QPointF(x + 15, y - 15);
-    star[2] = QPointF(x + 45, y - 15);
-    star[3] = QPointF(x + 15, y);
-    star[4] = QPointF(x + 30, y + 30);
-    star[5] = QPointF(x, y + 15);
-    star[6] = QPointF(x - 30, y + 30);
-    star[7] = QPointF(x - 15, y);
-    star[8] = QPointF(x - 45, y - 15);
-    star[9] = QPointF(x - 15, y - 15);
+    Stars* star = new Stars;
+    star->setXY(x, y);
 
     stars.push_back(star);
 }
@@ -126,5 +113,19 @@ void Widget::nextCount()
     if(counter > 3)
     {
         counter = 1;
+    }
+}
+
+void Widget::deleteRects(Rects* rect)
+{
+    QMutableVectorIterator<Rects* > i(rects);
+    while(i.hasNext())
+    {
+        Rects* temp = i.next();
+
+        if(temp == rect)
+        {
+            i.remove();
+        }
     }
 }
