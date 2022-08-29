@@ -2,41 +2,66 @@
 
 #include <QRandomGenerator>
 #include <QPainter>
-#include <QMouseEvent>
 
-Rects::Rects(QObject *parent) : QObject(parent)
+Rects::Rects(QObject *parent, int xn, int yn) : QObject(parent), QGraphicsItem()
 {
-    x = 0;
-    y = 0;
+    this->x = xn;
+    this->y = yn;
 
-    brush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
-    brush.setStyle(Qt::BrushStyle::SolidPattern);
+    rectBrush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
+    rectBrush.setStyle(Qt::BrushStyle::SolidPattern);
 
+    moving = false;
+
+    rect.setRect(x - offsetX, y - offsetY, width, height);
 }
 
 
-void Rects::paint(QPainter *painter)
+void Rects::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(brush);
-    painter->drawRect(x - 2, y - 4, 80, 60);
+    painter->setBrush(rectBrush);
+    painter->drawRect(x - offsetX, y - offsetY, width, height);
+
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
 }
 
 QRectF Rects::boundingRect() const
 {
-    return QRectF(x - 2, y - 4,  80, 60);
+    return QRectF(x - offsetX, y - offsetY, width, height);
 }
 
-
-void Rects::setXY(int xn, int xy)
+void Rects::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    this->x = xn;
-    this->y = xy;
-}
-
-void Rects::mousePressEvent(QMouseEvent* event)
-{
-    if(event->button() & Qt::RightButton)
+    if(event->button() == Qt::LeftButton)
     {
-        emit deleteThis(this);
+        moving = true;
+
+        currentPos = event->pos().toPoint();
+    }
+}
+
+void Rects::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        moving = false;
+
+        emit reDraw();
+    }
+}
+
+void Rects::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(moving)
+    {
+        QPoint vec = event->pos().toPoint() - currentPos;
+
+        x += vec.x();
+        y += vec.y();
+
+        currentPos = event->pos().toPoint();
+
+        emit reDraw();
     }
 }

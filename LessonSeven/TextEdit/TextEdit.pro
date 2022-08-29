@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,19 +9,31 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ellipse.cpp \
+    contextmenu.cpp \
+    helpwindow.cpp \
+    hotkeyswindow.cpp \
     main.cpp \
-    rects.cpp \
-    stars.cpp \
-    widget.cpp
+    mainwindow.cpp
 
 HEADERS += \
-    ellipse.h \
-    rects.h \
-    stars.h \
-    widget.h
+    contextmenu.h \
+    helpwindow.h \
+    hotkeyswindow.h \
+    mainwindow.h
+
+FORMS += \
+    helpwindow.ui \
+    hotkeyswindow.ui \
+    mainwindow.ui
+
+TRANSLATIONS += TextEdit_ru.ts TextEdit_en.ts
+CODECFORSRC = UTF-8
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Files.qrc

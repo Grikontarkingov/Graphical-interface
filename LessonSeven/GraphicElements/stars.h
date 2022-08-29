@@ -4,27 +4,31 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QBrush>
+#include <QGraphicsSceneMouseEvent>
 
 
-class Stars :  public QObject
+class Stars :  public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_PROPERTY(QBrush brush)
 
 public:
-    explicit Stars(QObject *parent = nullptr);
-    void setBrush(QBrush brush) { this->brush = brush; emit reDraw(); }
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void setXY(int xn, int xy);
+    Stars(QObject *parent = nullptr, int xn = 0, int yn = 0);
+    void setBrush(QBrush brush) { this->starBrush = brush; emit reDraw(); }
+    QRectF boundingRect() const override;
 
 signals:
     void reDraw();
 
 private:
-    QBrush brush;
-    QPointF* star;
-    int x, y, width, height;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void makeStar();
+
+    QPolygon star;
+    QBrush starBrush;
+    QPointF starPoint;
+
+    int x, y;
 };
 
 #endif // STARS_H

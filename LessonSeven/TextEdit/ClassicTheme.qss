@@ -1,0 +1,64 @@
+QMainWindow
+{
+    background-color:rgb(230,230,230);
+}
+
+QWidget
+{
+    background-color:rgb(230,230,230);
+}
+
+QMenuBar
+{
+    background-color:rgb(230,230,230);
+}
+
+QMenuBar::item::selected
+{
+    background-color:rgb(51,173,255);
+    color:rgb(0,0,0);
+}
+
+QTextEdit
+{
+    background-color:rgb(255,255,255);
+}
+
+QTableView
+{
+    background-color:rgb(255,255,255);
+}
+
+QTableView::item::selected
+{
+    background-color:rgb(51,173,255);
+    color:rgb(0,0,0);
+}
+
+QHeaderView::section
+{
+    background-color:rgb(255,255,255);
+    color:rgb(0,0,0);
+}
+
+QMenu
+{
+    background-color:rgb(230,230,230);
+}
+
+QTableView
+{
+    background-color:rgb(255,255,255);
+}
+
+QMenu::item::selected
+{
+    background-color:rgb(51,173,255);
+    color:rgb(0,0,0);
+}
+
+QPushButton
+{
+    background-color:rgb(217, 217, 217);
+    color:rgb(0,0,0);
+}

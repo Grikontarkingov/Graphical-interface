@@ -1,18 +1,11 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include "rects.h"
-#include "ellipse.h"
-#include "stars.h"
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
-#include <QWidget>
-#include <QMouseEvent>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class Widget; }
-QT_END_NAMESPACE
-
-class Widget : public QWidget
+class Widget :  public QGraphicsView
 {
     Q_OBJECT
 
@@ -20,25 +13,19 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
-protected:
-    void mouseReleaseEvent(QMouseEvent* event);
-    void paintEvent(QPaintEvent *event);
-
 private slots:
-    void deleteRects(Rects* rect);
+    void reDraw();
 
 private:
-    void drawRect();
-    void drawElipse();
-    void drawStar();
-
     void nextCount();
+    void addFigure(int x, int y);
 
-    QVector<Rects* > rects;
-    QVector<Ellipse* > ellipses;
-    QVector<Stars* > stars;
+    QGraphicsScene *scene;
 
     int counter;
-    int x, y;
+
+protected:
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
 };
 #endif // WIDGET_H

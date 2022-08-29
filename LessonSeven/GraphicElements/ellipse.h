@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QBrush>
+#include <QGraphicsSceneMouseEvent>
 
 class Ellipse :  public QObject, public QGraphicsItem
 {
@@ -11,20 +12,30 @@ class Ellipse :  public QObject, public QGraphicsItem
     Q_PROPERTY(QBrush brush)
 
 public:
-    explicit Ellipse(QObject *parent = nullptr);
-    void setBrush(QBrush brush) { this->brush = brush; emit reDraw(); }
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void setXY(int xn, int xy);
+    Ellipse(QObject *parent = nullptr, int xn = 0, int yn = 0);
+    void setBrush(QBrush brush) { this->ellipseBrush = brush; emit reDraw(); }
+    QRectF boundingRect() const override;
 
 signals:
     void reDraw();
 
 private:
-    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    QBrush brush;
-    int x, y, width, height;
+    QRect ellipse;
+    QBrush ellipseBrush;
+    QPointF ellipsePoint;
+    QPoint currentPos;
+
+    int x, y;
+    const int width = 100, height = 60;
+    const int offsetX = 50, offsetY = 30;
+    bool moving;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // ELLIPSE_H

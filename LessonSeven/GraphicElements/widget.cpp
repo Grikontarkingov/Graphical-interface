@@ -1,109 +1,40 @@
 #include "widget.h"
+#include "rects.h"
+#include "ellipse.h"
+#include "stars.h"
 
-#include <QPainter>
-#include <QApplication>
-#include <QRandomGenerator>
-#include <QStyleOptionGraphicsItem>
+#include <QMouseEvent>
 
 Widget::Widget(QWidget *parent)
-: QWidget(parent)
+    : QGraphicsView(parent)
 {
+    scene = new QGraphicsScene(this);
+    scene->setSceneRect(0, 0, 800, 600);
+    this->setScene(scene);
+
+    this->setMinimumSize(800, 600);
+
     counter = 0;
 }
-
 
 Widget::~Widget()
 {
 }
 
-void Widget::mouseReleaseEvent(QMouseEvent* event)
+void Widget::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(event->button() & Qt::LeftButton)
+    QPointF point = this->mapToScene(event->pos());
+
+    if(event->button() == Qt::LeftButton && !(scene->itemAt(point, QGraphicsView::transform())))
     {
         nextCount();
 
-        x = event->x();
-        y = event->y();
-
-        this->update();
+        addFigure(point.toPoint().x(), point.toPoint().y());
     }
-}
-
-void Widget::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    QStyleOptionGraphicsItem bla;
-
-    switch (counter) {
-    case 1:
-        drawRect();
-
-        break;
-
-    case 2:
-        drawElipse();
-
-        break;
-
-    case 3:
-        drawStar();
-
-        break;
-    }
-
-    if(!rects.isEmpty())
+    else if(event->button() == Qt::RightButton)
     {
-        for(auto rect : rects)
-        {
-            rect->paint(&painter);
-        }
+        scene->removeItem(scene->itemAt(point, QGraphicsView::transform()));
     }
-
-    if(!ellipses.isEmpty())
-    {
-        for(auto ellipse : ellipses)
-        {
-            ellipse->paint(&painter, &bla, this);
-        }
-    }
-
-    if(!stars.isEmpty())
-    {
-        for(auto star : stars)
-        {
-            star->paint(&painter, &bla, this);
-        }
-    }
-
-    painter.end();
-    this->render(this);
-
-    Q_UNUSED(event)
-}
-
-void Widget::drawRect()
-{
-    Rects* rect = new Rects(this);
-    rect->setXY(x, y);
-    connect(rect, &Rects::deleteThis, this, &Widget::deleteRects);
-
-    rects.push_back(rect);
-}
-
-void Widget::drawElipse()
-{
-    Ellipse* ellipse = new Ellipse;
-    ellipse->setXY(x, y);
-
-    ellipses.push_back(ellipse);
-}
-
-void Widget::drawStar()
-{
-    Stars* star = new Stars;
-    star->setXY(x, y);
-
-    stars.push_back(star);
 }
 
 void Widget::nextCount()
@@ -116,16 +47,43 @@ void Widget::nextCount()
     }
 }
 
-void Widget::deleteRects(Rects* rect)
-{
-    QMutableVectorIterator<Rects* > i(rects);
-    while(i.hasNext())
-    {
-        Rects* temp = i.next();
 
-        if(temp == rect)
-        {
-            i.remove();
-        }
+void Widget::addFigure(int x, int y)
+{
+    switch(counter)
+    {
+        case 1:
+            {
+                Rects* rect = new Rects(this, x, y);
+                connect(rect, &Rects::reDraw, this, &Widget::reDraw);
+
+                scene->addItem(rect);
+
+                break;
+            }
+        case 2:
+            {
+                Ellipse* ellipse = new Ellipse(this, x, y);
+                connect(ellipse, &Ellipse::reDraw, this, &Widget::reDraw);
+
+                scene->addItem(ellipse);
+
+                break;
+            }
+        case 3:
+            {
+                Stars* star = new Stars(this, x, y);
+                connect(star, &Stars::reDraw, this, &Widget::reDraw);
+
+                scene->addItem(star);
+
+                break;
+            }
     }
+}
+
+void Widget::reDraw()
+{
+    scene->update();
+    update();
 }

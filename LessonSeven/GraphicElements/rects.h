@@ -1,36 +1,43 @@
 #ifndef RECTS_H
 #define RECTS_H
 
-#include "qbrush.h"
 #include <QObject>
-#include <QMouseEvent>
+#include <QGraphicsSceneMouseEvent>
 #include <QBrush>
+#include <QGraphicsItem>
 
 
-class Rects :  public QObject
+class Rects :  public QObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_PROPERTY(QBrush brush)
 
 public:
-    explicit Rects(QObject *parent = nullptr);
-    void setBrush(QBrush brush) { this->brush = brush; emit reDraw(); }
-
-    void paint(QPainter *painter);
-    void setXY(int xn, int xy);
+    Rects(QObject *parent = nullptr, int xn = 0, int yn = 0);
+    void setBrush(QBrush brush) { this->rectBrush = brush; emit reDraw(); }
+    QRectF boundingRect() const override;
 
 signals:
     void reDraw();
-    void deleteThis(Rects* rect);
 
 private:
-    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-    QBrush brush;
-    int x, y, width, height;
+    QRect rect;
+    QBrush rectBrush;
+    QPointF rectPoint;
+    QPoint currentPos;
+
+    int x, y;
+    const int width = 100, height = 60;
+    const int offsetX = 50, offsetY = 30;
+    bool moving;
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+
 };
 
 #endif // RECTS_H

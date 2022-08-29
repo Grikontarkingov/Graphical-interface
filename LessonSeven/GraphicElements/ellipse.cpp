@@ -3,22 +3,24 @@
 #include <QRandomGenerator>
 #include <QPainter>
 
-Ellipse::Ellipse(QObject *parent) : QObject(parent), QGraphicsItem()
+Ellipse::Ellipse(QObject *parent, int xn, int yn) : QObject(parent), QGraphicsItem()
 {
-    x = 0;
-    y = 0;
+    this->x = xn;
+    this->y = yn;
 
-    brush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
-    brush.setStyle(Qt::BrushStyle::SolidPattern);
+    ellipseBrush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
+    ellipseBrush.setStyle(Qt::BrushStyle::SolidPattern);
 
-    setPos(0,0);
+    moving = false;
+
+    ellipse.setRect(x - offsetX, y - offsetY, width, height);
 }
 
 
 void Ellipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(brush);
-    painter->drawEllipse(x - 2, y - 4, 80, 60);
+    painter->setBrush(ellipseBrush);
+    painter->drawEllipse(x - offsetX, y - offsetY, width, height);
 
     Q_UNUSED(option)
     Q_UNUSED(widget)
@@ -26,12 +28,40 @@ void Ellipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 QRectF Ellipse::boundingRect() const
 {
-    return QRectF(x - 2, y - 4, 80, 60);
+    return QRectF(x - offsetX, y - offsetY, width, height);
 }
 
-
-void Ellipse::setXY(int xn, int xy)
+void Ellipse::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    this->x = xn;
-    this->y = xy;
+    if(event->button() == Qt::LeftButton)
+    {
+        moving = true;
+
+        currentPos = event->pos().toPoint();
+    }
+}
+
+void Ellipse::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        moving = false;
+
+        emit reDraw();
+    }
+}
+
+void Ellipse::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(moving)
+    {
+        QPoint vec = event->pos().toPoint() - currentPos;
+
+        x += vec.x();
+        y += vec.y();
+
+        currentPos = event->pos().toPoint();
+
+        emit reDraw();
+    }
 }
