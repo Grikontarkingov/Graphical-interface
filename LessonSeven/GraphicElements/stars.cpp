@@ -13,6 +13,9 @@ Stars::Stars(QObject *parent, int xn, int yn) : QObject(parent), QGraphicsItem()
     starBrush.setColor(QColor::fromRgb(QRandomGenerator::global()->generate()));
     starBrush.setStyle(Qt::BrushStyle::SolidPattern);
 
+
+    moving = false;
+
     this->setTransformOriginPoint(star.boundingRect().center());
 }
 
@@ -43,4 +46,47 @@ void Stars::makeStar()
     star << QPoint(x - 15, y);
     star << QPoint(x - 45, y - 15);
     star << QPoint(x - 15, y - 15);
+}
+
+void Stars::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        moving = true;
+
+        currentPos = event->pos().toPoint();
+    }
+}
+
+void Stars::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        moving = false;
+
+        emit reDraw();
+    }
+}
+
+void Stars::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(moving)
+    {
+        QPoint vec = event->pos().toPoint() - currentPos;
+
+        x += vec.x();
+        y += vec.y();
+
+        for(auto& line : star)
+        {
+            line.setX(line.x() + vec.x());
+            line.setY(line.y() + vec.y());
+        }
+
+        currentPos = event->pos().toPoint();
+
+        this->setTransformOriginPoint(star.boundingRect().center());
+
+        emit reDraw();
+    }
 }

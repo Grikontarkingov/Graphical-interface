@@ -35,6 +35,8 @@ void Widget::mouseReleaseEvent(QMouseEvent *event)
     {
         scene->removeItem(scene->itemAt(point, QGraphicsView::transform()));
     }
+
+    QGraphicsView::mouseReleaseEvent(event);
 }
 
 void Widget::nextCount()

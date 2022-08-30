@@ -27,8 +27,15 @@ private:
     QPolygon star;
     QBrush starBrush;
     QPointF starPoint;
+    QPoint currentPos;
 
     int x, y;
+    bool moving;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // STARS_H
