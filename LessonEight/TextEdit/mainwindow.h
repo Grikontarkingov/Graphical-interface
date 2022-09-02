@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 #include <QTranslator>
 
 QT_BEGIN_NAMESPACE
@@ -99,6 +100,12 @@ private:
     QAction* about;
 
     QToolBar* toolBar;
+    QPushButton* bold;
+    QPushButton* italic;
+    QPushButton* underLined;
+    QPushButton* alignmentLeft;
+    QPushButton* alignmentCenter;
+    QPushButton* alignmentRight;
 
     QString filename;
     QString lang;

@@ -7,6 +7,9 @@
 #include <QPrintDialog>
 #include <QPainter>
 #include <QContextMenuEvent>
+#include <QDate>
+#include <QTime>
+#include <QTranslator>
 
 ContextMenu::ContextMenu(QWidget* parent)
     : QTextEdit(parent)
@@ -17,11 +20,17 @@ ContextMenu::ContextMenu(QWidget* parent)
     sendToPrintAction = new QAction;
     copyFormatAction = new QAction;
     pasteFormatAction = new QAction;
+    pasteCurrentDate = new QAction;
+    pasteCurrentTime = new QAction;
 
     menu->addAction(copyAction);
     menu->addAction(pasteAction);
     menu->addAction(copyFormatAction);
     menu->addAction(pasteFormatAction);
+
+    menu->addSeparator();
+    menu->addAction(pasteCurrentDate);
+    menu->addAction(pasteCurrentTime);
 
     menu->addSeparator();
 
@@ -32,6 +41,8 @@ ContextMenu::ContextMenu(QWidget* parent)
     connect(copyFormatAction, &QAction::triggered, this, &ContextMenu::on_copyFormatAction_clicked);
     connect(pasteFormatAction, &QAction::triggered, this, &ContextMenu::on_pasteFormatAction_clicked);
     connect(sendToPrintAction, &QAction::triggered, this, &ContextMenu::on_sendToPrint_clicked);
+    connect(pasteCurrentDate, &QAction::triggered, this, &ContextMenu::on_pasteCurrentDate);
+    connect(pasteCurrentTime, &QAction::triggered, this, &ContextMenu::on_pasteCurrentTime);
 }
 
 void ContextMenu::contextMenuEvent(QContextMenuEvent* event)
@@ -83,6 +94,30 @@ void ContextMenu::on_sendToPrint_clicked()
     this->print(&printer);
 }
 
+void ContextMenu::on_pasteCurrentDate()
+{
+    QDate date = QDate::currentDate();
+
+    const QString month[] = {"", tr(" января "), tr(" февраля "), tr(" марта "),
+                                 tr(" апреля "), tr(" мая "), tr(" июня "),
+                                 tr(" июля "), tr(" августа "), tr(" сентября "),
+                                 tr(" октября "), tr(" ноября "), tr(" декабря ")
+    };
+
+    QString str = QString::number(date.day()) + month[date.month()] + QString::number(date.year());
+
+    this->textCursor().insertText(str);
+}
+
+void ContextMenu::on_pasteCurrentTime()
+{
+    QTime time = QTime::currentTime();
+
+    QString str = QString::number(time.hour()) + ":" + QString::number(time.minute());
+
+    this->textCursor().insertText(str);
+}
+
 void ContextMenu::setTextCopyButton(QString text)
 {
     copyAction->setText(text.toStdString().c_str());
@@ -106,6 +141,16 @@ void ContextMenu::setTextCopyFormatButton(QString text)
 void ContextMenu::setTextPasteFormatButton(QString text)
 {
     pasteFormatAction->setText(text.toStdString().c_str());
+}
+
+void ContextMenu::setTextPasteCurrentDate(QString text)
+{
+    pasteCurrentDate->setText(text.toStdString().c_str());
+}
+
+void ContextMenu::setTextPasteCurrentTime(QString text)
+{
+    pasteCurrentTime->setText(text.toStdString().c_str());
 }
 
 void ContextMenu::print(QPrinter* printer)

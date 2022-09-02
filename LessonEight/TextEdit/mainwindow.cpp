@@ -148,15 +148,15 @@ MainWindow::MainWindow(QWidget *parent)
     formatedLayout->addWidget(sizeFont, 0, 1, 1, 2);
     connect(sizeFont, &QSpinBox::textChanged, this, &MainWindow::on_pointSize_changed);
 
-    QPushButton* bold = new QPushButton(tr("Bold"));
+    bold = new QPushButton;
     formatedLayout->addWidget(bold, 1, 0);
     connect(bold, &QPushButton::clicked, this, &MainWindow::on_bold_clicked);
 
-    QPushButton* italic = new QPushButton(tr("Italic"));
+    italic = new QPushButton;
     formatedLayout->addWidget(italic, 1, 1);
     connect(italic, &QPushButton::clicked, this, &MainWindow::on_italic_clicked);
 
-    QPushButton* underLined = new QPushButton(tr("Underline"));
+    underLined = new QPushButton;
     formatedLayout->addWidget(underLined, 1, 2);
     connect(underLined, &QPushButton::clicked, this, &MainWindow::on_underLined_clicked);
 
@@ -168,15 +168,15 @@ MainWindow::MainWindow(QWidget *parent)
     QGridLayout* alignmentLayout = new QGridLayout(this);
     alignment->setLayout(alignmentLayout);
 
-    QPushButton* alignmentLeft = new QPushButton(tr("Left"));
+    alignmentLeft = new QPushButton;
     alignmentLayout->addWidget(alignmentLeft, 0, 0);
     connect(alignmentLeft, &QPushButton::clicked, this, &MainWindow::on_alignmentLeft_clicked);
 
-    QPushButton* alignmentCenter = new QPushButton(tr("Center"));
+    alignmentCenter = new QPushButton;
     alignmentLayout->addWidget(alignmentCenter, 0, 1);
     connect(alignmentCenter, &QPushButton::clicked, this, &MainWindow::on_alignmentCenter_clicked);
 
-    QPushButton* alignmentRight = new QPushButton(tr("Right"));
+    alignmentRight = new QPushButton;
     alignmentLayout->addWidget(alignmentRight, 0, 2);
     connect(alignmentRight, &QPushButton::clicked, this, &MainWindow::on_alignmentRight_clicked);
 
@@ -537,6 +537,12 @@ void MainWindow::setLanguage(const QString lang)
     darkTheme->setText(tr("Dark Theme"));
     colorfulTheme->setText(tr("Colorful theme"));
     about->setText(tr("About"));
+    bold->setText(tr("Bold"));
+    italic->setText(tr("Italic"));
+    underLined->setText(tr("Underline"));
+    alignmentLeft->setText(tr("Left"));
+    alignmentCenter->setText(tr("Center"));
+    alignmentRight->setText(tr("Right"));
 
     QList<QMdiSubWindow* > subWindowList = textsEditors->subWindowList();
     for(int i = 0; i < subWindowList.length(); ++i)
@@ -548,6 +554,8 @@ void MainWindow::setLanguage(const QString lang)
         temp->setTextSendToPrintButton(tr("SendToPrint"));
         temp->setTextCopyFormatButton(tr("Copy format"));
         temp->setTextPasteFormatButton(tr("Paste format"));
+        temp->setTextPasteCurrentDate(tr("Paste current date"));
+        temp->setTextPasteCurrentTime(tr("Paste current time"));
     }
 }
 

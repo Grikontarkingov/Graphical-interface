@@ -16,9 +16,69 @@
         <translation type="vanished">Отправить на печать</translation>
     </message>
     <message>
-        <location filename="contextmenu.cpp" line="50"/>
+        <location filename="contextmenu.cpp" line="87"/>
         <source>Print To</source>
         <translation>Печать на</translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="101"/>
+        <source> января </source>
+        <translation> января </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="101"/>
+        <source> февраля </source>
+        <translation> февраял </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="101"/>
+        <source> марта </source>
+        <translation> март </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="102"/>
+        <source> апреля </source>
+        <translation> апреля </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="102"/>
+        <source> мая </source>
+        <translation> мая </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="102"/>
+        <source> июня </source>
+        <translation> июнь </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="103"/>
+        <source> июля </source>
+        <translation> июля </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="103"/>
+        <source> августа </source>
+        <translation> августа </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="103"/>
+        <source> сентября </source>
+        <translation> сентября </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="104"/>
+        <source> октября </source>
+        <translation> октября </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="104"/>
+        <source> ноября </source>
+        <translation> ноября </translation>
+    </message>
+    <message>
+        <location filename="contextmenu.cpp" line="104"/>
+        <source> декабря </source>
+        <translation> декабря </translation>
     </message>
 </context>
 <context>
@@ -105,7 +165,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="388"/>
+        <location filename="mainwindow.cpp" line="519"/>
         <source>Text Editor</source>
         <translation>Текстовый редактор</translation>
     </message>
@@ -114,69 +174,81 @@
         <translation type="vanished">&amp;Файл</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="236"/>
+        <location filename="mainwindow.cpp" line="292"/>
+        <location filename="mainwindow.cpp" line="554"/>
+        <source>Copy format</source>
+        <translation>Копирвоать формат</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="293"/>
+        <location filename="mainwindow.cpp" line="555"/>
+        <source>Paste format</source>
+        <translation>Вставить формат</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="306"/>
         <source>Print To</source>
         <translation>Печать на</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="389"/>
+        <location filename="mainwindow.cpp" line="520"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="390"/>
+        <location filename="mainwindow.cpp" line="521"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="391"/>
+        <location filename="mainwindow.cpp" line="522"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="392"/>
+        <location filename="mainwindow.cpp" line="523"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="393"/>
+        <location filename="mainwindow.cpp" line="524"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="394"/>
+        <location filename="mainwindow.cpp" line="525"/>
         <source>Open read-only</source>
         <oldsource>Open
 read-only</oldsource>
         <translation>Открыть только для чтения</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="395"/>
+        <location filename="mainwindow.cpp" line="526"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="396"/>
+        <location filename="mainwindow.cpp" line="527"/>
         <source>Save To</source>
         <translation>Сохранить как</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="397"/>
+        <location filename="mainwindow.cpp" line="528"/>
         <source>New Tab</source>
         <translation>Новая вкладка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="398"/>
+        <location filename="mainwindow.cpp" line="529"/>
         <source>Send to print</source>
         <translation>Отправить на печать</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="399"/>
+        <location filename="mainwindow.cpp" line="530"/>
         <source>Exit</source>
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="400"/>
+        <location filename="mainwindow.cpp" line="531"/>
         <source>Change language to Ru</source>
         <oldsource>Change
 language
@@ -184,7 +256,7 @@ to Ru</oldsource>
         <translation>Изменить язык на русский</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="401"/>
+        <location filename="mainwindow.cpp" line="532"/>
         <source>Change language to En</source>
         <oldsource>Change
 language
@@ -192,58 +264,105 @@ to En</oldsource>
         <translation>Изменить язык на английский</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="402"/>
+        <location filename="mainwindow.cpp" line="533"/>
         <source>Change hotkeys</source>
         <translation>Изменить горячие клавиши</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="403"/>
+        <location filename="mainwindow.cpp" line="534"/>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="404"/>
+        <location filename="mainwindow.cpp" line="535"/>
         <source>Classic theme</source>
         <translation>Классическая тема</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="405"/>
+        <location filename="mainwindow.cpp" line="536"/>
         <source>Dark Theme</source>
         <translation>Темная тема</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="406"/>
+        <location filename="mainwindow.cpp" line="537"/>
         <source>Colorful theme</source>
         <translation>Цветная тема</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="407"/>
+        <location filename="mainwindow.cpp" line="538"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="414"/>
+        <location filename="mainwindow.cpp" line="556"/>
+        <source>Paste current date</source>
+        <translation>Вставить текущую дату</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="557"/>
+        <source>Paste current time</source>
+        <translation>Вставить текущее время</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="289"/>
+        <location filename="mainwindow.cpp" line="551"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="415"/>
+        <source>Formated</source>
+        <translation type="vanished">Форматирование</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="539"/>
+        <source>Bold</source>
+        <translation>Жирный</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="540"/>
+        <source>Italic</source>
+        <translation>Курсив</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="541"/>
+        <source>Underline</source>
+        <translation>Подчеркнутый</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="542"/>
+        <source>Left</source>
+        <translation>По левому краю</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="543"/>
+        <source>Center</source>
+        <translation>По центру</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="544"/>
+        <source>Right</source>
+        <translation>По правому краю</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="290"/>
+        <location filename="mainwindow.cpp" line="552"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="416"/>
+        <location filename="mainwindow.cpp" line="291"/>
+        <location filename="mainwindow.cpp" line="553"/>
         <source>SendToPrint</source>
         <translation>Отправить на печать</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="180"/>
-        <location filename="mainwindow.cpp" line="191"/>
+        <location filename="mainwindow.cpp" line="243"/>
+        <location filename="mainwindow.cpp" line="254"/>
         <source>Choose txt file...</source>
         <translation>Выберите txt файл...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="215"/>
+        <location filename="mainwindow.cpp" line="278"/>
         <source>Choose directory...</source>
         <translation>Выберите директорию...</translation>
     </message>

@@ -9,17 +9,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ellipse.cpp \
+    controller.cpp \
+    fileviewer.cpp \
+    findwindow.cpp \
     main.cpp \
-    rects.cpp \
-    stars.cpp \
-    widget.cpp
+    mainwindow.cpp \
+    threadfinder.cpp
 
 HEADERS += \
-    ellipse.h \
-    rects.h \
-    stars.h \
-    widget.h
+    controller.h \
+    fileviewer.h \
+    findwindow.h \
+    mainwindow.h \
+    threadfinder.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

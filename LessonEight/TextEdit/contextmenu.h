@@ -23,6 +23,8 @@ public:
     void setTextSendToPrintButton(QString text);
     void setTextCopyFormatButton(QString text);
     void setTextPasteFormatButton(QString text);
+    void setTextPasteCurrentDate(QString text);
+    void setTextPasteCurrentTime(QString text);
 
 protected:
     void contextMenuEvent(QContextMenuEvent* event) override;
@@ -33,6 +35,8 @@ public slots:
     void on_sendToPrint_clicked();
     void on_copyFormatAction_clicked();
     void on_pasteFormatAction_clicked();
+    void on_pasteCurrentDate();
+    void on_pasteCurrentTime();
 
 private:
     QMenu* menu;
@@ -42,6 +46,10 @@ private:
     QAction* sendToPrintAction;
     QAction* copyFormatAction;
     QAction* pasteFormatAction;
+    QAction* pasteCurrentDate;
+    QAction* pasteCurrentTime;
+
+    QString lang;
 };
 
 #endif // CONTEXTMENU_H
