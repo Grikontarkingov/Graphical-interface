@@ -3,8 +3,6 @@ import QtQuick.Controls 2.12
 
 Button
 {
-    anchors.centerIn: addNewTask
-
     id:addNewTaskButton
 
     background:

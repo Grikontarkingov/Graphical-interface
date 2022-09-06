@@ -189,6 +189,7 @@ Window {
                 text: "Add new task"
                 font.family: "Times New Roman"
                 font.pointSize: 13
+                anchors.centerIn: addNewTask
 
                 onClicked:
                 {
