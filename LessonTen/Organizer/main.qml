@@ -11,7 +11,7 @@ Window {
     height: 480
     visible: true
 
-    title: qsTr("Hello World")
+    title: qsTr("Task manager")
 
     Rectangle
     {
@@ -36,6 +36,7 @@ Window {
                 verticalAlignment: TextEdit.AlignVCenter
                 horizontalAlignment:  TextEdit.AlignHCenter
                 text: "New Task"
+                selectByMouse: true
                 font.family: "Calibri"
                 font.pointSize: 14
                 color: "black"
@@ -59,6 +60,7 @@ Window {
                 verticalAlignment: TextEdit.AlignVCenter
                 horizontalAlignment:  TextEdit.AlignHCenter
                 text: "00.00.0000"
+                selectByMouse: true
                 font.family: "Calibri"
                 font.pointSize: 14
                 color: "black"
@@ -181,29 +183,91 @@ Window {
             border.color: "black"
             border.width: 1
 
-            CustomButton
+            Rectangle
             {
-                id:save
-                width: 100
-                height: 50
-                text: "Add new task"
-                font.family: "Times New Roman"
-                font.pointSize: 13
-                anchors.centerIn: addNewTask
+                id: rectangleButton
 
-                onClicked:
+                width: 160
+                height: 60
+                border.color: "black"
+                border.width: 1
+
+                CustomButton
                 {
-                    var taskName_ = taskNameText.text
-                    var deadline_ = deadlineText.text
-                    var progress_ = progressText.text
-                    fileController.writeFile(taskName_, deadline_, progress_)
+                    id:save
+                    width: 100
+                    height: 50
+                    text: "Add new task"
+                    font.family: "Times New Roman"
+                    font.pointSize: 13
+                    anchors.centerIn: rectangleButton
+
+                    onClicked:
+                    {
+                        var taskName_ = taskNameText.text
+                        var deadline_ = deadlineText.text
+                        var progress_ = progressText.text
+                        fileController.writeFile(taskName_, deadline_, progress_)
+                    }
                 }
             }
+
+            Rectangle
+            {
+                id: rectangleText
+                anchors.top: rectangleButton.bottom
+                width: 160
+                height: 60
+                border.color: "black"
+                border.width: 1
+
+                TextEdit
+                {
+                    id:numberTasksText
+                    width: 30
+                    height: 30
+                    text: fileController.getTasksSize()
+                    font.family: "Times New Roman"
+                    font.pointSize: 14
+                    anchors.centerIn: rectangleText
+                    readOnly: true
+
+                }
+            }
+        }
+    }
+
+    Rectangle
+    {
+        anchors.top:  taskNewPanel.bottom
+        width: 640
+        height: 60
+
+        TextEdit
+        {
+            id: warningMessage
+            width: parent.width
+            height: parent.height
+            font.family: "Times New Roman"
+            font.pointSize: 15
+            verticalAlignment: TextEdit.AlignVCenter
+            horizontalAlignment:  TextEdit.AlignHCenter
+            text: ""
         }
     }
 
     FileController
     {
         id:fileController
+
+        onChangeNumberTasks:
+        {
+            numberTasksText.text = number.toString();
+        }
+
+        onUncorrectField:
+        {
+            warningMessage.text = warning;
+        }
     }
 }

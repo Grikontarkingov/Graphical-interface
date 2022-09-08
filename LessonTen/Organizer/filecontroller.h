@@ -17,11 +17,22 @@ public:
     Q_INVOKABLE
     void writeFile(QString taskName, QString deadline, QString progress);
 
+    Q_INVOKABLE
+    int getTasksSize();
+
 private:
+    bool checkTaskName(QString taskName);
+    bool checkDate(QString date);
+    bool checkDay(int day, int month, int year, QDate currentDate);
+    bool checkMonth(int month, int year, QDate currentDate);
+    bool checkYear(int year, QDate currentDate);
+
     QFile *file;
     QVector<std::tuple<QString, QString, QString>> tasks;
 
 signals:
+    void changeNumberTasks(int number);
+    void uncorrectField(QString warning);
 };
 
 #endif // FILECONTROLLER_H
