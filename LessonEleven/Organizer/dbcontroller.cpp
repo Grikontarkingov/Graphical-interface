@@ -1,84 +1,45 @@
-#include "filecontroller.h"
+#include "dbcontroller.h"
 
-#include <QDataStream>
 #include <QDate>
+#include <QDebug>
+#include <QSqlError>
+#include <QWidget>
 
-FileController::FileController(QObject *parent)
+DBController::DBController(QObject *parent)
     : QObject{parent}
 {
-    file = new QFile("database.txt", this);
-    file->open(QFile::ReadOnly);
+    model = new QSqlRelationalTableModel(nullptr, QSqlDatabase::addDatabase("QSQLITE"));
+    database = model->database();
+    database.setDatabaseName("tasks.db");
 
-    if(file)
+    if(!database.open())
     {
-        while(file->isOpen())
-        {
-            QDataStream stream(file);
+        qDebug() << "Бд не открыта" << database.lastError();
+    }
+    else
+    {
+        QSqlQuery query;
 
-            int len = 0;
-            stream.readRawData((char*)&len, sizeof len);
+        query.exec("CREATE TABLE IF NOT EXISTS tasks ("
+                   "task_name TEXT NOT NULL,"
+                   "deadline REAL NOT NULL,"
+                   "progress REAL NOT NULL);");
 
-            QByteArray b;
-            b.resize(len);
-            stream.readRawData(b.data(), len);
-            QString taskName = QString::fromUtf8(b);
+        query.exec(tr("SELECT COUNT(*) FROM tasks"));
+        query.next ();
+        numberOfTasks = query.value(0).toInt();
 
-            stream.readRawData((char*)&len, sizeof len);
-            b.resize(len);
-            stream.readRawData(b.data(), len);
-            QString deadline = QString::fromUtf8(b);
-
-            stream.readRawData((char*)&len, sizeof len);
-            b.resize(len);
-            stream.readRawData(b.data(), len);
-            QString progress = QString::fromUtf8(b);
-
-            tasks.push_back(std::make_tuple(taskName, deadline, progress));
-
-            if(file->atEnd())
-            {
-                file->close();
-            }
-        }
+        emit changeNumberTasks(getTasksSize());
     }
 }
 
-FileController::~FileController()
+DBController::~DBController()
 {
-    if(file->open(QFile::WriteOnly))
-    {
-        for(auto task : tasks)
-        {
-            QDataStream stream(file);
-
-            auto  bytes = std::get<0>(task).toUtf8();
-            int  len = bytes.length();
-
-            stream.writeRawData((char*)&len, sizeof len);
-            stream.writeRawData(bytes.data(), len);
-
-            bytes = std::get<1>(task).toUtf8();
-            len = bytes.length();
-
-            stream.writeRawData((char*)&len, sizeof len);
-            stream.writeRawData(bytes.data(), len);
-
-            bytes = std::get<2>(task).toUtf8();
-            len = bytes.length();
-
-            stream.writeRawData((char*)&len, sizeof len);
-            stream.writeRawData(bytes.data(), len);
-        }
-
-        file->close();
-    }
-
-    tasks.clear();
-
-    delete file;
+    if(tasksView) delete tasksView;
+    database.close();
 }
 
-void FileController::writeFile(QString taskName, QString deadline, QString progress)
+void DBController::writeDB(QString taskName, QString deadline, QString progress)
 {
     if(checkTaskName(taskName) && checkDate(deadline))
     {
@@ -89,18 +50,54 @@ void FileController::writeFile(QString taskName, QString deadline, QString progr
         return;
     }
 
-    tasks.push_back(std::make_tuple(taskName, deadline, progress));
+    if(!database.open())
+    {
+        qDebug() << "Бд не открыта" << database.lastError();
+    }
+    else
+    {
+        QSqlQuery query;
+        query.exec("CREATE TABLE IF NOT EXISTS tasks ("
+                   "task_name TEXT NOT NULL,"
+                   "deadline REAL NOT NULL,"
+                   "progress REAL NOT NULL);");
 
-    emit changeNumberTasks(tasks.size());
+        query.exec("INSERT INTO tasks VALUES ('" + taskName + "', '" + deadline + "', '" + progress + "')");
+
+        query.exec(tr("SELECT COUNT(*) FROM tasks"));
+        query.next ();
+        numberOfTasks = query.value(0).toInt();
+
+        if(tasksView)
+        {
+            tasksView->updateTasks(model);
+        }
+    }
+
+
+    emit changeNumberTasks(getTasksSize());
 }
 
 
-int FileController::getTasksSize()
+int DBController::getTasksSize()
 {
-    return tasks.size();
+    return numberOfTasks;
 }
 
-bool FileController::checkDate(QString date)
+void DBController::showTasks()
+{
+    tasksView = new TasksView(model);
+    connect(tasksView, &TasksView::closeWindow, this, &DBController::closeTasksView);
+    tasksView->show();
+}
+
+void DBController::closeTasksView()
+{
+    delete tasksView;
+}
+
+
+bool DBController::checkDate(QString date)
 {
     if(date.size() != 10)
     {
@@ -144,8 +141,7 @@ bool FileController::checkDate(QString date)
     return true;
 }
 
-
-bool FileController::checkTaskName(QString taskName)
+bool DBController::checkTaskName(QString taskName)
 {
     if(taskName.isEmpty() || taskName == "")
     {
@@ -157,7 +153,7 @@ bool FileController::checkTaskName(QString taskName)
     return true;
 }
 
-bool FileController::checkDay(int day, int month, int year, QDate currentDate)
+bool DBController::checkDay(int day, int month, int year, QDate currentDate)
 {
     int dayInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if(year % 4 == 0)
@@ -197,7 +193,7 @@ bool FileController::checkDay(int day, int month, int year, QDate currentDate)
     return true;
 }
 
-bool FileController::checkMonth(int month, int year, QDate currentDate)
+bool DBController::checkMonth(int month, int year, QDate currentDate)
 {
     if(year == currentDate.year())
     {
@@ -219,7 +215,7 @@ bool FileController::checkMonth(int month, int year, QDate currentDate)
     return true;
 }
 
-bool FileController::checkYear(int year, QDate currentDate)
+bool DBController::checkYear(int year, QDate currentDate)
 {
     if(year < currentDate.year())
     {

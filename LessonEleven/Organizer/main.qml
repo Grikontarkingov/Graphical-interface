@@ -3,15 +3,21 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.3
-import com.lesson.filecontroller 1.0
+import com.lesson.dbcontroller 1.0
 
 
-Window {
+ApplicationWindow {
+    id: root
     width: 640
     height: 480
     visible: true
 
     title: qsTr("Task manager")
+
+    onClosing:
+    {
+        dbController.destroy()
+    }
 
     Rectangle
     {
@@ -195,19 +201,43 @@ Window {
                 CustomButton
                 {
                     id:save
-                    width: 100
-                    height: 50
-                    text: "Add new task"
+                    width: parent.width / 2
+                    height: parent.height
+                    text: "Add\nnew task"
                     font.family: "Times New Roman"
-                    font.pointSize: 13
-                    anchors.centerIn: rectangleButton
+                    font.pointSize: 11
 
                     onClicked:
                     {
                         var taskName_ = taskNameText.text
                         var deadline_ = deadlineText.text
                         var progress_ = progressText.text
-                        fileController.writeFile(taskName_, deadline_, progress_)
+                        dbController.writeDB(taskName_, deadline_, progress_)
+                    }
+                }
+                Button
+                {
+                    id:showTasks
+                    width: parent.width / 2
+                    height: parent.height
+                    text: "Show\ntasks"
+                    font.family: "Times New Roman"
+                    font.pointSize: 11
+                    anchors.left: save.right
+
+                    background:
+                        Rectangle
+                        {
+                            width: parent.width
+                            height: parent.height
+                            color: "lightgrey"
+                            border.color: "black"
+                            border.width: 1
+                        }
+
+                    onClicked:
+                    {
+                        dbController.showTasks()
                     }
                 }
             }
@@ -226,7 +256,7 @@ Window {
                     id:numberTasksText
                     width: 30
                     height: 30
-                    text: fileController.getTasksSize()
+                    text: dbController.getTasksSize()
                     font.family: "Times New Roman"
                     font.pointSize: 14
                     anchors.centerIn: rectangleText
@@ -256,9 +286,9 @@ Window {
         }
     }
 
-    FileController
+    DBController
     {
-        id:fileController
+        id:dbController
 
         onChangeNumberTasks:
         {
@@ -271,3 +301,4 @@ Window {
         }
     }
 }
+
